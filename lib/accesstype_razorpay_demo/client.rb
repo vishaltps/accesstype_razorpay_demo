@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module AccessTypeRazorpayDemo
+module AccesstypeRazorpayDemo
 	class Client
 		attr_reader :config, :credentials
 

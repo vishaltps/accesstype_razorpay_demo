@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module AccessTypeRazorpayDemo
+module AccesstypeRazorpayDemo
 	class Api
 		class << self
 			def create_subscription(credentials, plan, subscriber, start_time, trial_period_duration)

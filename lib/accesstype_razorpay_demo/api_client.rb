@@ -1,4 +1,4 @@
-module AccessTypeRazorpayDemo
+module AccesstypeRazorpayDemo
 	class ApiClient
 		attr_reader :config, :credentials
 

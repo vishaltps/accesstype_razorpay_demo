@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module AccessTypeRazorpayDemo
+module AccesstypeRazorpayDemo
   class Recurring
     attr_accessor :api_key, :secret_key, :enviroment
 
