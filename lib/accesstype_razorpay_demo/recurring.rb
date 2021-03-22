@@ -18,12 +18,12 @@ module AccesstypeRazorpayDemo
           start_time,
           opts.dig(:trial_period_duration)
         )
-      	binding.pry
-        return AccesstypeRazorpayDemo::Response.new(success: false, code: subcription.code, message: 'Remote Subscritpion could not be created') unless subscription
 
-        subscription_attempt = params[:subscription_attempt]
-        subscription_attempt&.update(external_reference_id: subscription.id)
-        nil
+    	unless subscription
+      	AccesstypeRazorpayDemo::Response.new(success: false, code: subscription&.code, message: 'Remote Subscritpion could not be created')
+      else
+				AccesstypeRazorpayDemo::Response.new(success: true, code: subscription&.code, message: 'Subscritpion created successfully', data: subscription)
+			end
     end
 
     def credentials
