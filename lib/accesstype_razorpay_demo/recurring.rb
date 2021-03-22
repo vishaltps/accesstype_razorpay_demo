@@ -10,13 +10,12 @@ module AccesstypeRazorpayDemo
       @enviroment = args[:enviroment]
     end
 
-    def preview(subscription_plan:, subscriber:, start_time:, opts:)
+    def preview(plan_id:, start_time:, opts: {})
       subscription = Api.create_subscription(
           credentials,
-          subscription_plan,
-          subscriber,
+          plan_id,
           start_time,
-          opts.dig(:trial_period_duration)
+          opts
         )
 
     	unless subscription

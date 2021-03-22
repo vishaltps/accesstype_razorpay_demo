@@ -4,69 +4,63 @@ module AccesstypeRazorpayDemo
 	class Client
 		attr_reader :config, :credentials
 
-    def initialize(config, credentials)
-      @config = config
-      @credentials = credentials
-    end
+		def initialize(config, credentials)
+			@config = config
+			@credentials = credentials
+		end
 
-		def create_subscription(subscription_plan, subscriber, start_time, trial_period_duration = nil)
-      razorpay_plan_id = subscription_plan.metadata.dig('razorpay', 'plan_id')
-      total_count = calculate_subscription_total_count(subscription_plan)
-      params = { plan_id: razorpay_plan_id, total_count: total_count, start_at: (Time.now + 1.hour) }
+		def create_subscription(plan_id, start_time, opts)
+			razorpay_plan_id = subscription_plan.metadata.dig('razorpay', 'plan_id')
+			return AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Duration or duration unit are not specified") if opts.dig(:duration).blank? || opts.dig(:duration_unit).blank?
 
-      # if subscriber.present?
-      #   start_time = subscriber.most_suitable_start_timestamp(subscription_plan)
-      #   start_time += trial_period_duration if trial_period_duration
-      #   params[:start_at] = start_time.to_i if start_time > Time.zone.now
-      # end
-      response = client.post('/v1/subscriptions', params)
-      if response.code == 200
-        AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while creating recurring subscription", data: response.parsed_response)
-        # subscription = Razorpay::Subscription.new(response.parsed_response, config, credentials)
-        # subscription
-      else
-      	AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while creating recurring subscription")
-      end
-    end
+			total_count = calculate_subscription_total_count(opts.dig(:duration), opts.dig(:duration_unit))
+			params = { plan_id: plan_id, total_count: total_count, start_at: (Time.now + 1.hour) }
 
-    def get_payment(payment_id)
-      response = client.get("/v1/payments/#{payment_id}")
+			response = client.post('/v1/subscriptions', params)
+			if response.code == 200
+				AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while creating recurring subscription", data: response.parsed_response)
+			else
+				AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while creating recurring subscription")
+			end
+		end
 
-      if response.code == 200
-      	AccesstypeRazorpayDemo::Response.new(success: true, code: 200, message: "Fetched payment successfully", data: response.parsed_response)
-      else
-      	AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while fetching payment #{credentials['app_key']}:#{payment_id}")
-      end
-    end
+		def get_payment(payment_id)
+			response = client.get("/v1/payments/#{payment_id}")
 
-    def capture_payment(payment_id, payment_amount, currency)
-    	binding.pry
-    	response = client.post(
-        "/v1/payments/#{payment_id}/capture",
-        amount: payment_amount,
-        currency: currency
-      )
-      if response.code == 200
-        AccesstypeRazorpayDemo::Response.new(success: true, code: 200, message: "Payment captured successfully", data: response.parsed_response)
-      else
-      	AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while capturing payment #{credentials['app_key']}:#{payment_id}")
-      end
-    end
+			if response.code == 200
+				AccesstypeRazorpayDemo::Response.new(success: true, code: 200, message: "Fetched payment successfully", data: response.parsed_response)
+			else
+				AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while fetching payment #{credentials['app_key']}:#{payment_id}")
+			end
+		end
 
-    private
+		def capture_payment(payment_id, payment_amount, currency)
+			response = client.post(
+				"/v1/payments/#{payment_id}/capture",
+				amount: payment_amount,
+				currency: currency
+				)
+			if response.code == 200
+				AccesstypeRazorpayDemo::Response.new(success: true, code: 200, message: "Payment captured successfully", data: response.parsed_response)
+			else
+				AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while capturing payment #{credentials['app_key']}:#{payment_id}")
+			end
+		end
 
-    MAXIMUM_RENEWALS = {
-      'weeks' => 520,
-      'months' => 120,
-      'years' => 10
-    }.freeze
+		private
 
-    def calculate_subscription_total_count(plan)
-      [(10.years / plan.duration).to_i, MAXIMUM_RENEWALS[plan.duration_unit]].min
-    end
+		MAXIMUM_RENEWALS = {
+			'weeks' => 520,
+			'months' => 120,
+			'years' => 10
+		}.freeze
 
-    def client
-      @client ||= ApiClient.new(config, credentials)
-    end
+		def calculate_subscription_total_count(duration, duration_unit)
+			[(10.years / duration).to_i, MAXIMUM_RENEWALS[duration_unit]].min
+		end
+
+		def client
+			@client ||= ApiClient.new(config, credentials)
+		end
 	end
 end

@@ -3,8 +3,8 @@
 module AccesstypeRazorpayDemo
 	class Api
 		class << self
-			def create_subscription(credentials, plan, subscriber, start_time, trial_period_duration)
-				Client.new(AccesstypeRazorpayDemo::RAZORPAY_CONFIG.dig(0, credentials[:enviroment].to_sym), credentials).create_subscription(plan, subscriber, start_time, trial_period_duration)
+			def create_subscription(credentials, plan_id, start_time, opts)
+				Client.new(AccesstypeRazorpayDemo::RAZORPAY_CONFIG.dig(0, credentials[:enviroment].to_sym), credentials).create_subscription(plan_id, start_time, opts)
 			end
 
 			def get_payment(credentials, payment_id)
