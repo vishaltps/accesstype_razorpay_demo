@@ -18,8 +18,8 @@ module AccesstypeRazorpayDemo
           start_time,
           opts.dig(:trial_period_duration)
         )
-
-        return PaymentResult.error('razorpay_recurring', message: 'Remote Subscritpion could not be created') unless subscription
+      	binding.pry
+        return AccesstypeRazorpayDemo::Response.new(success: false, code: subcription.code, message: 'Remote Subscritpion could not be created') unless subscription
 
         subscription_attempt = params[:subscription_attempt]
         subscription_attempt&.update(external_reference_id: subscription.id)
