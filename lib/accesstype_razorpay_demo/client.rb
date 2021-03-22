@@ -10,7 +10,6 @@ module AccesstypeRazorpayDemo
 		end
 
 		def create_subscription(plan_id, start_time, opts)
-			razorpay_plan_id = subscription_plan.metadata.dig('razorpay', 'plan_id')
 			return AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Duration or duration unit are not specified") if opts.dig(:duration).blank? || opts.dig(:duration_unit).blank?
 
 			total_count = calculate_subscription_total_count(opts.dig(:duration), opts.dig(:duration_unit))
