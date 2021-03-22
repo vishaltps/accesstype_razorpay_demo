@@ -43,7 +43,7 @@ module AccesstypeRazorpayDemo
     	binding.pry
     	response = client.post(
         "/v1/payments/#{payment_id}/capture",
-        amount: payment_amount.fractional,
+        amount: payment_amount,
         currency: currency
       )
       if response.code == 200
