@@ -2,7 +2,7 @@ module AccesstypeRazorpayDemo
   class Response
     attr_accessor :success, :code, :status, :message, :data
 
-    def initialize(success: true, code: 200, status: , message: '', data:)
+    def initialize(success: true, code: 200, status: nil, message: '', data: {})
       @success = success
       @code = code
       @status = status
