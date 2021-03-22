@@ -22,8 +22,9 @@ Or install it yourself as:
 
 
 For one time payment
-
+```
 onetime_payment = AccesstypeRazorpayDemo::Onetime.new(api_key: "API_KEY_OF_RAZORPAY_ACCOUNT", secret_key: "SECRET_KEY_OF_RAZORPAY_ACCOUNT", enviroment: 'sandbox')
+```
 
 enviroment can be `live` or `sandbox`. By default it will take `live` as enviroment.
 
