@@ -20,9 +20,9 @@ module AccesstypeRazorpayDemo
         )
 
     	unless subscription
-      	AccesstypeRazorpayDemo::Response.new(success: false, code: subscription&.code, message: 'Remote Subscritpion could not be created')
+      	AccesstypeRazorpayDemo::Response.new(success: false, code: subscription&.code, message: subscription&.message)
       else
-				AccesstypeRazorpayDemo::Response.new(success: true, code: subscription&.code, message: 'Subscritpion created successfully', data: subscription)
+				AccesstypeRazorpayDemo::Response.new(success: true, code: 200, message: 'Subscritpion created successfully', data: subscription&.data)
 			end
     end
 

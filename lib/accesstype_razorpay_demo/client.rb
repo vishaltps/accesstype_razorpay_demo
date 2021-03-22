@@ -21,12 +21,24 @@ module AccesstypeRazorpayDemo
       # end
       response = client.post('/v1/subscriptions', params)
       if response.code == 200
-        binding.pry
+        AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while creating recurring subscription", data: response.parsed_response)
         # subscription = Razorpay::Subscription.new(response.parsed_response, config, credentials)
         # subscription
       else
-        error_logger(system: 'RAZORPAY', message: "Recieved #{response.code} while creating recurring subscription #{credentials['app_key']}:#{params[:plan_id]}")
-        nil
+      	AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while creating recurring subscription")
+      end
+    end
+
+    def capture_payment(payment_id, payment_amount)
+    	response = client.post(
+        "/v1/payments/#{payment_id}/capture",
+        amount: amount.fractional,
+        currency: amount.currency.to_s
+      )
+      if response.code == 200
+        AccesstypeRazorpayDemo::Response.new(success: true, code: 200, message: "Payment captured successfully", data: response.parsed_response)
+      else
+      	AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while capturing payment", data: response.parsed_response)
       end
     end
 

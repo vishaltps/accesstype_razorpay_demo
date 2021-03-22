@@ -18,6 +18,13 @@ module AccesstypeRazorpayDemo
       nil
     end
 
+    def capture(payment_token:, payment_amount: )
+       razorpay_payment = Api.capture_payment(credentials,
+                                              payment_token,
+                                              payment_amount)
+
+    end
+
     def credentials
       {api_key: api_key, secret_key: secret_key, enviroment: enviroment}
     end
