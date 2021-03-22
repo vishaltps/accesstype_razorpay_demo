@@ -11,8 +11,8 @@ module AccesstypeRazorpayDemo
 				Client.new(AccesstypeRazorpayDemo::RAZORPAY_CONFIG.dig(0, credentials[:enviroment].to_sym), credentials).get_payment(payment_id)
 			end
 
-			def capture_payment(credentials, payment_id, payment_amount)
-				Client.new(AccesstypeRazorpayDemo::RAZORPAY_CONFIG.dig(0, credentials[:enviroment].to_sym), credentials).capture_payment(payment_id, payment_amount)
+			def capture_payment(credentials, payment_id, payment_amount, payment_currency)
+				Client.new(AccesstypeRazorpayDemo::RAZORPAY_CONFIG.dig(0, credentials[:enviroment].to_sym), credentials).capture_payment(payment_id, payment_amount, payment_currency)
 			end
 		end
 	end

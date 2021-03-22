@@ -39,11 +39,12 @@ module AccesstypeRazorpayDemo
       end
     end
 
-    def capture_payment(payment_id, payment_amount)
+    def capture_payment(payment_id, payment_amount, currency)
+    	binding.pry
     	response = client.post(
         "/v1/payments/#{payment_id}/capture",
-        amount: amount.fractional,
-        currency: amount.currency.to_s
+        amount: payment_amount.fractional,
+        currency: currency
       )
       if response.code == 200
         AccesstypeRazorpayDemo::Response.new(success: true, code: 200, message: "Payment captured successfully", data: response.parsed_response)

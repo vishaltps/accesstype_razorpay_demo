@@ -22,10 +22,11 @@ module AccesstypeRazorpayDemo
       razorpay_payment = Api.get_payment(credentials, payment_token)
     end
 
-    def capture(payment_token:, payment_amount: )
+    def capture(payment_token:, payment_amount:, payment_currency: )
        razorpay_payment = Api.capture_payment(credentials,
                                               payment_token,
-                                              payment_amount)
+                                              payment_amount,
+                                              payment_currency)
 
     end
 
