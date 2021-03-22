@@ -7,7 +7,7 @@ module AccesstypeRazorpayDemo
     def initialize(**args)
       @api_key = args[:api_key]
       @secret_key = args[:secret_key]
-      @enviroment = args[:enviroment]
+      @enviroment = args[:enviroment] || 'live'
     end
 
     def preview(plan_id:, start_time:, opts: {})

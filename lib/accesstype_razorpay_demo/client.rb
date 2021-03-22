@@ -11,7 +11,7 @@ module AccesstypeRazorpayDemo
 
 		def create_subscription(plan_id, start_time, opts)
 			return AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Duration or duration unit are not specified") if opts.dig(:duration).blank? || opts.dig(:duration_unit).blank?
-
+			binding.pry
 			total_count = calculate_subscription_total_count(opts.dig(:duration), opts.dig(:duration_unit))
 			params = { plan_id: plan_id, total_count: total_count, start_at: (Time.now + 1.hour) }
 
