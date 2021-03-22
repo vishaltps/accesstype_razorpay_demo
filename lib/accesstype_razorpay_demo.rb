@@ -7,6 +7,7 @@ require_relative "accesstype_razorpay_demo/api"
 require_relative "accesstype_razorpay_demo/recurring"
 require_relative "accesstype_razorpay_demo/client"
 require_relative "accesstype_razorpay_demo/api_client"
+require_relative "accesstype_razorpay_demo/response"
 
 module AccesstypeRazorpayDemo
   class Error < StandardError; end
