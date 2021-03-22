@@ -55,11 +55,12 @@ module AccesstypeRazorpayDemo
 		}.freeze
 
 		def calculate_subscription_total_count(duration, duration_unit)
-			[(10.years / duration.to_i).to_i, MAXIMUM_RENEWALS[duration_unit]].min
+			# [(10.years / duration).to_i, MAXIMUM_RENEWALS[duration_unit]].min # was getting error from rails TypeError: no implicit conversion of String into ActiveSupport::Duration
+			120 # added just for testing
 		end
 
 		def client
 			@client ||= ApiClient.new(config, credentials)
 		end
 	end
-end
+end 
