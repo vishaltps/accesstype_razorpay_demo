@@ -47,7 +47,7 @@ recurring_payment = AccesstypeRazorpayDemo::Recurring.new(api_key: "API_KEY_OF_R
 Methods for recurring payment
 
 ```
-recurring_payment.preview(plan_id: "plan_id_OF_RAZORPAY", start_time: "START_TIME", duration: "DURATION", duration_unit: "DURATION_UNIT")
+recurring_payment.preview(plan_id: "plan_id_OF_RAZORPAY", start_time: "START_TIME", opts: {duration: '1 month', duration_unit: 'months'})
 
 ```
 
