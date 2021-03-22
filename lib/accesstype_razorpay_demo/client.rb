@@ -29,6 +29,16 @@ module AccesstypeRazorpayDemo
       end
     end
 
+    def get_payment(payment_id)
+      response = client.get("/v1/payments/#{payment_id}")
+
+      if response.code == 200
+      	AccesstypeRazorpayDemo::Response.new(success: true, code: 200, message: "Fetched payment successfully", data: response.parsed_response)
+      else
+      	AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while fetching payment #{credentials['app_key']}:#{payment_id}")
+      end
+    end
+
     def capture_payment(payment_id, payment_amount)
     	response = client.post(
         "/v1/payments/#{payment_id}/capture",
@@ -38,7 +48,7 @@ module AccesstypeRazorpayDemo
       if response.code == 200
         AccesstypeRazorpayDemo::Response.new(success: true, code: 200, message: "Payment captured successfully", data: response.parsed_response)
       else
-      	AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while capturing payment", data: response.parsed_response)
+      	AccesstypeRazorpayDemo::Response.new(success: false, code: response.code, message: "Recieved #{response.code} while capturing payment #{credentials['app_key']}:#{payment_id}")
       end
     end
 

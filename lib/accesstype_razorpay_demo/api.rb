@@ -7,7 +7,11 @@ module AccesstypeRazorpayDemo
 				Client.new(AccesstypeRazorpayDemo::RAZORPAY_CONFIG.dig(0, credentials[:enviroment].to_sym), credentials).create_subscription(plan, subscriber, start_time, trial_period_duration)
 			end
 
-			def create_subscription(credentials, payment_id, payment_amount)
+			def get_payment(payment_id)
+				Client.new(AccesstypeRazorpayDemo::RAZORPAY_CONFIG.dig(0, credentials[:enviroment].to_sym), credentials).get_payment(payment_id)
+			end
+
+			def capture_payment(credentials, payment_id, payment_amount)
 				Client.new(AccesstypeRazorpayDemo::RAZORPAY_CONFIG.dig(0, credentials[:enviroment].to_sym), credentials).capture_payment(payment_id, payment_amount)
 			end
 		end
