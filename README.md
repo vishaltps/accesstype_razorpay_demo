@@ -40,8 +40,9 @@ onetime_payment.capture(payment_token: "PAYMENT_TOKEN", payment_amount: "PAYMENT
 
 
 For recurring payment
-
+```
 recurring_payment = AccesstypeRazorpayDemo::Recurring.new(api_key: "API_KEY_OF_RAZORPAY_ACCOUNT", secret_key: "SECRET_KEY_OF_RAZORPAY_ACCOUNT", enviroment: 'sandbox')
+```
 
 Methods for recurring payment
 
