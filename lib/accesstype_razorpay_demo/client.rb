@@ -55,7 +55,7 @@ module AccesstypeRazorpayDemo
 		}.freeze
 
 		def calculate_subscription_total_count(duration, duration_unit)
-			[(10.years / duration).to_i, MAXIMUM_RENEWALS[duration_unit]].min
+			[(10.years / duration.to_i).to_i, MAXIMUM_RENEWALS[duration_unit]].min
 		end
 
 		def client
